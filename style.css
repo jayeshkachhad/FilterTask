@@ -1,57 +1,89 @@
 section {
-    /* margin: 50px; */
+  /* margin: 50px; */
 }
 
 .proSec {
-    /* border: 1px solid red; */
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  /* border: 1px solid red; */
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .products {
-    display: flex;
-    margin: 15px;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  margin: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .product {
-    display: flex;
-    max-width: 322px;
-    min-height: 340px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 10px;
-    border: 1px solid black;
-    border-radius: 5px;
+  display: flex;
+  max-width: 322px;
+  min-height: 340px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .product img {
-    object-fit: contain;
+  object-fit: contain;
 }
 
 .pro-title {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .display {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 .leftFilter {
-    /* border: 1px solid red; */
-    width: 20%;
+  /* border: 1px solid red; */
+  width: 20%;
 }
 
+.priceFilter {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid black;
+}
+
+.priceFilter input {
+  width: 70%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
 
 .tag {
-    user-select: none;
+  user-select: none;
+}
+
+.radio {
+  display: flex;
+}
+
+.radio label {
+  width: 150px;
+}
+
+.radio input {
+  size: 10px;
+  height: 15px;
+  /* margin-right: 5px; */
+  font-size: 10px;
 }

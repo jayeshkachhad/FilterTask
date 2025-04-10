@@ -7,6 +7,7 @@ const disTags = document.querySelector("#tags");
 // const searchBt = document.getElementById("searchBt");
 const applyTag = document.getElementById("applyTag");
 const clear = document.getElementById("clear");
+const applyRadio = document.getElementById('applyRadio');
 
 // API Reference
 // https://dummyjson.com/docs/products
@@ -61,9 +62,9 @@ setTimeout(function () {
 }, 1000);
 
 
-function displayAllProducts() {
+function displayAllProducts(data) {
     proContainer.innerHTML = "";
-    producTable.forEach(function (pro, i) {
+    data.forEach(function (pro, i) {
         // let newPro = document.createElement("divPro");
         let newPro = document.createElement("div");
         newPro.classList.add("product");
@@ -80,12 +81,29 @@ function displayAllProducts() {
 
 // create all products on display
 setTimeout(function () {
-    displayAllProducts();
+    displayAllProducts(producTable);
 }, 1500);
 
 clear.onclick = () => {
-    displayAllProducts();
+    displayAllProducts(producTable);
 }
+
+applyRadio.onclick = () => {
+    let method = "";
+    let radio = document.getElementsByName("sortPrice")
+    radio.forEach(function (r) {
+        if (r.checked) {
+            method = r.value;
+        }
+    })
+    if (method == "lth") {
+        displayAllProducts(producTable.sort(function (a, b) { return a.price - b.price }))
+    }
+    else if (method == "htl") {
+        displayAllProducts(producTable.sort(function (a, b) { return b.price - a.price }))
+    }
+}
+
 
 
 searchBt.onclick = () => {
@@ -167,5 +185,5 @@ applyTag.onclick = () => {
             console.log("Else Cathe")
             // displayAllProducts()
         }
-    });
+    }); 
 }
