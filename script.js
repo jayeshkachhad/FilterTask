@@ -6,7 +6,10 @@ const searchBt = document.querySelector("#searchBt");
 const disTags = document.querySelector("#tags");
 // const searchBt = document.getElementById("searchBt");
 const applyTag = document.getElementById("applyTag");
+const clear = document.getElementById("clear");
 
+// API Reference
+// https://dummyjson.com/docs/products
 const productApi = "https://dummyjson.com/products";
 
 let allProducts = [];
@@ -48,7 +51,7 @@ setTimeout(function () {
     allTags.forEach(function (t) {
         let tagDiv = document.createElement("div");
         let tv = String(t).toLowerCase();
-        console.log(tv)
+        // console.log(tv)
         tagDiv.classList.add("tag");
         tagDiv.innerHTML = `<label for="${tv}" >${String(tv)}</label>
                     <input class="tagInput" type="checkbox" value="${tv}" name="${tv}" id="${tv}">`;
@@ -58,23 +61,31 @@ setTimeout(function () {
 }, 1000);
 
 
-
-// create all products on display
-setTimeout(function () {
+function displayAllProducts() {
     proContainer.innerHTML = "";
-
     producTable.forEach(function (pro, i) {
+        // let newPro = document.createElement("divPro");
         let newPro = document.createElement("div");
         newPro.classList.add("product");
         newPro.innerHTML = `
-            <img src=${pro["image"]} alt="${pro["name"]}" height="200px" width="300px">
+            <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
                 <h3 class="pro-title">${pro["name"]}</h2>
                 <h5>${pro["price"]} $</h3>
                 <p>Tags: ${pro["tags"]}</p>
         `;
         proContainer.appendChild(newPro);
     });
+}
+
+
+// create all products on display
+setTimeout(function () {
+    displayAllProducts();
 }, 1500);
+
+clear.onclick = () => {
+    displayAllProducts();
+}
 
 
 searchBt.onclick = () => {
@@ -101,7 +112,7 @@ searchBt.onclick = () => {
             `;
             proContainer.appendChild(newPro);
         } else {
-            console.log("Not Found")
+            // console.log("Not Found")
         }
     });
 
@@ -120,7 +131,7 @@ applyTag.onclick = () => {
         }
 
     })
-    console.log(selectedTags)
+    // console.log(selectedTags)
 
     proContainer.innerHTML = "";
     producTable.forEach(function (pro, i) {
@@ -129,14 +140,16 @@ applyTag.onclick = () => {
         //     console.log(tag.trim())
         // })
 
+        let proTagsAll = pro['tags'];
+
         if (pro['tags'].forEach(function (tag) {
-            selectedTags.forEach(function (st) {
+
+            for (let st of selectedTags) {
 
                 // console.log("Selected Tag: ", st)
                 // console.log("Tag: ", tag.trim())
                 if (tag.trim() == st.trim()) {
                     // console.log("Got IT")
-
                     let newPro = document.createElement("div");
                     newPro.classList.add("product");
                     newPro.innerHTML = `
@@ -146,14 +159,13 @@ applyTag.onclick = () => {
             <p>Tags: ${pro["tags"]}</p>
             `;
                     proContainer.appendChild(newPro);
+                    break;
                 }
-            })
+            };
         })) {
         } else {
-
-
+            console.log("Else Cathe")
+            // displayAllProducts()
         }
     });
-
-
 }
