@@ -257,5 +257,3 @@ const proData = [
         ]
     }
 ]
-
-export default proData;

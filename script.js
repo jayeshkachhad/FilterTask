@@ -13,16 +13,17 @@ const applyRadio = document.getElementById('applyRadio');
 // API Reference
 // https://dummyjson.com/docs/products
 const productApi = "https://dummyjson.com/products";
-// const productApi = "/data.json";
 
 
 let allProducts = [];
 let producTable = [];
+let statusFetched = 0
 
 fetch(productApi)
     .then((response) => response.json())
     .then((data) => {
         allProducts = data["products"];
+        statusFetched = 1;
     })
     .catch((error) => {
         console.log(error);
@@ -30,9 +31,8 @@ fetch(productApi)
 
 let allTags = new Set();
 
-
-setTimeout(function () {
-    console.log(allProducts);
+let runner = setInterval(function () {
+    // console.log(allProducts);
 
     allProducts.forEach(function (p, i) {
         producTable[i] = {
@@ -41,16 +41,13 @@ setTimeout(function () {
             price: p["price"],
             tags: p["tags"],
         };
-
         producTable[i]['tags'].forEach(function (tag) {
             allTags.add(tag)
         })
-
     });
 
-    console.log(producTable);
+    // console.log(producTable);
     // console.log(allTags)
-
     disTags.innerHTML = "";
     allTags.forEach(function (t) {
         let tagDiv = document.createElement("div");
@@ -62,10 +59,13 @@ setTimeout(function () {
 
         disTags.appendChild(tagDiv);
     })
-}, 1000);
+    if (statusFetched == 1) {
+        clearInterval(runner)
+    }
+}, 100);
 
 
-function displayAllProducts(data, search) {
+function createData(data, search) {
     proContainer.innerHTML = "";
     let method = "";
     let radio = document.getElementsByName("sortPrice")
@@ -74,9 +74,10 @@ function displayAllProducts(data, search) {
             method = r.value;
         }
         else {
-            console.log("else Radioi");
+            // console.log("else Radioi");
         }
     })
+
     if (method == "lth") {
         data = data.sort(function (a, b) { return a.price - b.price })
         // console.log(data);
@@ -89,8 +90,6 @@ function displayAllProducts(data, search) {
         data = producTable;
     }
 
-    // data = producTable.filter(pro => pro.tags.includes("beauty"));.
-
     let tagy = document.querySelectorAll(".tagInput")
     let selectedTags = new Set();
     if (selectedTags)
@@ -99,10 +98,9 @@ function displayAllProducts(data, search) {
                 selectedTags.add(tag.value)
             }
         })
-    console.log(selectedTags.size)
+    // console.log(selectedTags.size)
 
     if (selectedTags.size > 0) {
-
         let newData = []
         selectedTags.forEach(function (tag) {
             let hasTag = producTable.filter(pro => pro.tags.includes(tag));
@@ -110,21 +108,19 @@ function displayAllProducts(data, search) {
                 newData.push(ht);
             })
         })
-
         // newData = uniqBy(newData, JSON.stringify)
         dupDel = new Set(newData)
         data = []
         dupDel.forEach(function (s) {
             data.push(s)
         })
-
     }
 
     if (search != "" | search != " ") {
         // console.log(typeof (data));
         data = data.filter(function (pro) {
             let product = String(pro['name']).toLowerCase();
-            if (product.includes(search)) {
+            if (product.includes(String(search).toLowerCase())) {
                 return true;
             }
         })
@@ -135,6 +131,13 @@ function displayAllProducts(data, search) {
         console.log("Else 99");
     }
 
+    // Creating Main Dispay Content
+    createDisplay(data)
+
+}
+
+
+function createDisplay(data) {
 
     data.forEach(function (pro, i) {
         // console.log("data . foreach");
@@ -143,48 +146,43 @@ function displayAllProducts(data, search) {
         let newPro = document.createElement("div");
         newPro.classList.add("product");
         newPro.innerHTML = `
-        <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
-        <h3 class="pro-title">${pro["name"]}</h2>
-        <h5>${pro["price"]} $</h3>
-        <p>Tags: ${pro["tags"]}</p>
-        `;
+    <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
+    <h3 class="pro-title">${pro["name"]}</h2>
+    <h5>${pro["price"]} $</h3>
+    <p>Tags: ${pro["tags"]}</p>
+    `;
         proContainer.appendChild(newPro);
     });
-
 }
 
 
 // create all products on display
-setTimeout(function () {
-    displayAllProducts(producTable, "");
-}, 1500);
+let creator = setInterval(function () {
+    createData(producTable, "");
+    if (statusFetched == 1) {
+        clearInterval(creator)
+    }
+}, 150);
 
 clear.onclick = () => {
     console.log("Clear Clecked");
-    displayAllProducts(producTable, "");
-}
+    document.querySelectorAll(".tagInput").forEach(f => f.checked = false)
 
-// applyRadio.onclick = () => {
-//     displayAllProducts(producTable)
-// }
+    createDisplay(producTable);
+}
 
 searchBt.onclick = () => {
 
     let val = searchIN.value;
-    console.log(val);
-
-    // displayAllProducts(producTable);
-    displayAllProducts(producTable, val);
+    createData(producTable, val);
 
 }
 
 applyTag.onclick = () => {
 
-    displayAllProducts(producTable, "")
+    createData(producTable, "")
 
 }
-
-
 
 // producTable.filter(pro => pro.tags.includes("beauty"))
 
