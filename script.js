@@ -9,9 +9,12 @@ const applyTag = document.getElementById("applyTag");
 const clear = document.getElementById("clear");
 const applyRadio = document.getElementById('applyRadio');
 
+
 // API Reference
 // https://dummyjson.com/docs/products
 const productApi = "https://dummyjson.com/products";
+// const productApi = "/data.json";
+
 
 let allProducts = [];
 let producTable = [];
@@ -62,7 +65,7 @@ setTimeout(function () {
 }, 1000);
 
 
-function displayAllProducts(data, search, tagFilter) {
+function displayAllProducts(data, search) {
     proContainer.innerHTML = "";
     let method = "";
     let radio = document.getElementsByName("sortPrice")
@@ -82,8 +85,39 @@ function displayAllProducts(data, search, tagFilter) {
         data = data.sort(function (a, b) { return b.price - a.price })
     }
     else {
-        console.log("else 85");
+        // console.log("else 85");
         data = producTable;
+    }
+
+    // data = producTable.filter(pro => pro.tags.includes("beauty"));.
+
+    let tagy = document.querySelectorAll(".tagInput")
+    let selectedTags = new Set();
+    if (selectedTags)
+        tagy.forEach(function (tag) {
+            if (tag.checked == true) {
+                selectedTags.add(tag.value)
+            }
+        })
+    console.log(selectedTags.size)
+
+    if (selectedTags.size > 0) {
+
+        let newData = []
+        selectedTags.forEach(function (tag) {
+            let hasTag = producTable.filter(pro => pro.tags.includes(tag));
+            hasTag.forEach(function (ht) {
+                newData.push(ht);
+            })
+        })
+
+        // newData = uniqBy(newData, JSON.stringify)
+        dupDel = new Set(newData)
+        data = []
+        dupDel.forEach(function (s) {
+            data.push(s)
+        })
+
     }
 
     if (search != "" | search != " ") {
@@ -94,15 +128,16 @@ function displayAllProducts(data, search, tagFilter) {
                 return true;
             }
         })
-        console.log(data);
+        // console.log(data);
     }
     else {
         // Do nothing
         console.log("Else 99");
     }
 
+
     data.forEach(function (pro, i) {
-        console.log("data . foreach");
+        // console.log("data . foreach");
         let searchNameL = pro['name'];
         searchNameL = String(searchNameL).toLowerCase();
         let newPro = document.createElement("div");
@@ -125,7 +160,7 @@ setTimeout(function () {
 }, 1500);
 
 clear.onclick = () => {
-    console.log("Clecked");
+    console.log("Clear Clecked");
     displayAllProducts(producTable, "");
 }
 
@@ -145,65 +180,12 @@ searchBt.onclick = () => {
 
 applyTag.onclick = () => {
 
-    let tagy = document.querySelectorAll(".tagInput")
+    displayAllProducts(producTable, "")
 
-    let selectedTags = new Set();
-    tagy.forEach(function (tag) {
-        if (tag.checked == true) {
-            selectedTags.add(tag.value)
-        }
-    })
-    // console.log(selectedTags)
-
-    proContainer.innerHTML = "";
-    producTable.forEach(function (pro, i) {
-
-        // pro['tags'].forEach(function (tag) {
-        //     console.log(tag.trim())
-        // })
-
-        let proTagsAll = pro['tags'];
-        if (pro['tags'].forEach(function (tag) {
-            for (let st of selectedTags) {
-                // console.log("Selected Tag: ", st)
-                // console.log("Tag: ", tag.trim())
-                if (tag.trim() == st.trim()) {
-                    // console.log("Got IT")
-                    let newPro = document.createElement("div");
-                    newPro.classList.add("product");
-                    newPro.innerHTML = `
-            <img src=${pro["image"]} alt="${pro["name"]}" height="200px" width="300px">
-            <h3 class="pro-title">${pro["name"]}</h2>
-            <h5>${pro["price"]} $</h3>
-            <p>Tags: ${pro["tags"]}</p>
-            `;
-                    proContainer.appendChild(newPro);
-                    break;
-                }
-            };
-        })) {
-        } else {
-            console.log("Else Cathe")
-            // displayAllProducts()
-        }
-    });
 }
 
 
-// setTimeout(function () {
 
-//     let ttt = [
+// producTable.filter(pro => pro.tags.includes("beauty"))
 
-//         producTable.filter(function (pro) {
-//             let tags = pro['tags']
-//             // console.log(tags);
-//             return tags.filter(function (t) {
-//                 if (t == "mascara") {
-//                     return true;
-//                 } else return false;
-//             })
-//         })
-
-//     ]
-//     console.log(ttt);
-// }, 2000)
+// document.querySelectorAll(".tagInput").forEach(f => f.click())
