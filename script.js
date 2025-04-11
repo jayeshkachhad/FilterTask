@@ -71,7 +71,7 @@ function displayAllProducts(data, search, tagFilter) {
             method = r.value;
         }
         else {
-            // console.log("else Radioi");
+            console.log("else Radioi");
         }
     })
     if (method == "lth") {
@@ -83,8 +83,9 @@ function displayAllProducts(data, search, tagFilter) {
     }
     else {
         console.log("else 85");
-
+        data = producTable;
     }
+
     if (search != "" | search != " ") {
         // console.log(typeof (data));
         data = data.filter(function (pro) {
@@ -93,6 +94,7 @@ function displayAllProducts(data, search, tagFilter) {
                 return true;
             }
         })
+        console.log(data);
     }
     else {
         // Do nothing
@@ -103,7 +105,6 @@ function displayAllProducts(data, search, tagFilter) {
         console.log("data . foreach");
         let searchNameL = pro['name'];
         searchNameL = String(searchNameL).toLowerCase();
-
         let newPro = document.createElement("div");
         newPro.classList.add("product");
         newPro.innerHTML = `
@@ -113,19 +114,19 @@ function displayAllProducts(data, search, tagFilter) {
         <p>Tags: ${pro["tags"]}</p>
         `;
         proContainer.appendChild(newPro);
-
     });
+
 }
 
 
 // create all products on display
 setTimeout(function () {
-    displayAllProducts(producTable);
+    displayAllProducts(producTable, "");
 }, 1500);
 
 clear.onclick = () => {
     console.log("Clecked");
-    displayAllProducts(producTable);
+    displayAllProducts(producTable, "");
 }
 
 // applyRadio.onclick = () => {
@@ -148,11 +149,9 @@ applyTag.onclick = () => {
 
     let selectedTags = new Set();
     tagy.forEach(function (tag) {
-
         if (tag.checked == true) {
             selectedTags.add(tag.value)
         }
-
     })
     // console.log(selectedTags)
 
@@ -164,11 +163,8 @@ applyTag.onclick = () => {
         // })
 
         let proTagsAll = pro['tags'];
-
         if (pro['tags'].forEach(function (tag) {
-
             for (let st of selectedTags) {
-
                 // console.log("Selected Tag: ", st)
                 // console.log("Tag: ", tag.trim())
                 if (tag.trim() == st.trim()) {
@@ -194,20 +190,20 @@ applyTag.onclick = () => {
 }
 
 
-setTimeout(function () {
+// setTimeout(function () {
 
-    let ttt = [
+//     let ttt = [
 
-        producTable.filter(function (pro) {
-            let tags = pro['tags']
-            // console.log(tags);
-            return tags.filter(function (t) {
-                if (t == "mascara") {
-                    return true;
-                } else return false;
-            })
-        })
+//         producTable.filter(function (pro) {
+//             let tags = pro['tags']
+//             // console.log(tags);
+//             return tags.filter(function (t) {
+//                 if (t == "mascara") {
+//                     return true;
+//                 } else return false;
+//             })
+//         })
 
-    ]
-    console.log(ttt);
-}, 2000)
+//     ]
+//     console.log(ttt);
+// }, 2000)
