@@ -62,19 +62,58 @@ setTimeout(function () {
 }, 1000);
 
 
-function displayAllProducts(data) {
+function displayAllProducts(data, search, tagFilter) {
     proContainer.innerHTML = "";
+    let method = "";
+    let radio = document.getElementsByName("sortPrice")
+    radio.forEach(function (r) {
+        if (r.checked) {
+            method = r.value;
+        }
+        else {
+            // console.log("else Radioi");
+        }
+    })
+    if (method == "lth") {
+        data = data.sort(function (a, b) { return a.price - b.price })
+        // console.log(data);
+    }
+    else if (method == "htl") {
+        data = data.sort(function (a, b) { return b.price - a.price })
+    }
+    else {
+        console.log("else 85");
+
+    }
+    if (search != "" | search != " ") {
+        // console.log(typeof (data));
+        data = data.filter(function (pro) {
+            let product = String(pro['name']).toLowerCase();
+            if (product.includes(search)) {
+                return true;
+            }
+        })
+    }
+    else {
+        // Do nothing
+        console.log("Else 99");
+    }
+
     data.forEach(function (pro, i) {
-        // let newPro = document.createElement("divPro");
+        console.log("data . foreach");
+        let searchNameL = pro['name'];
+        searchNameL = String(searchNameL).toLowerCase();
+
         let newPro = document.createElement("div");
         newPro.classList.add("product");
         newPro.innerHTML = `
-            <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
-                <h3 class="pro-title">${pro["name"]}</h2>
-                <h5>${pro["price"]} $</h3>
-                <p>Tags: ${pro["tags"]}</p>
+        <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
+        <h3 class="pro-title">${pro["name"]}</h2>
+        <h5>${pro["price"]} $</h3>
+        <p>Tags: ${pro["tags"]}</p>
         `;
         proContainer.appendChild(newPro);
+
     });
 }
 
@@ -85,59 +124,25 @@ setTimeout(function () {
 }, 1500);
 
 clear.onclick = () => {
+    console.log("Clecked");
     displayAllProducts(producTable);
 }
 
-applyRadio.onclick = () => {
-    let method = "";
-    let radio = document.getElementsByName("sortPrice")
-    radio.forEach(function (r) {
-        if (r.checked) {
-            method = r.value;
-        }
-    })
-    if (method == "lth") {
-        displayAllProducts(producTable.sort(function (a, b) { return a.price - b.price }))
-    }
-    else if (method == "htl") {
-        displayAllProducts(producTable.sort(function (a, b) { return b.price - a.price }))
-    }
-}
-
-
+// applyRadio.onclick = () => {
+//     displayAllProducts(producTable)
+// }
 
 searchBt.onclick = () => {
+
     let val = searchIN.value;
-    val = String(val).toLowerCase();
-    // let productNames = Array.from(document.querySelectorAll(".pro-title"));
-    proContainer.innerHTML = "";
+    console.log(val);
 
-    producTable.forEach(function (pro, i) {
-
-        let searchNameL = pro['name'];
-        searchNameL = String(searchNameL).toLowerCase()
-        // console.log(searchNameL)
-
-        if (searchNameL.includes(val)) {
-
-            let newPro = document.createElement("div");
-            newPro.classList.add("product");
-            newPro.innerHTML = `
-            <img src=${pro["image"]} alt="${pro["name"]}" height="200px" width="300px">
-            <h3 class="pro-title">${pro["name"]}</h2>
-            <h5>${pro["price"]} $</h3>
-            <p>Tags: ${pro["tags"]}</p>
-            `;
-            proContainer.appendChild(newPro);
-        } else {
-            // console.log("Not Found")
-        }
-    });
+    // displayAllProducts(producTable);
+    displayAllProducts(producTable, val);
 
 }
 
 applyTag.onclick = () => {
-
 
     let tagy = document.querySelectorAll(".tagInput")
 
@@ -185,5 +190,24 @@ applyTag.onclick = () => {
             console.log("Else Cathe")
             // displayAllProducts()
         }
-    }); 
+    });
 }
+
+
+setTimeout(function () {
+
+    let ttt = [
+
+        producTable.filter(function (pro) {
+            let tags = pro['tags']
+            // console.log(tags);
+            return tags.filter(function (t) {
+                if (t == "mascara") {
+                    return true;
+                } else return false;
+            })
+        })
+
+    ]
+    console.log(ttt);
+}, 2000)
