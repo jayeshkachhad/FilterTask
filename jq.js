@@ -12,11 +12,21 @@ $(document).ready(function () {
         // alert("You entered p1!");
     });
 
+    $(document).keydown(function (e) {
+        if (e.ctrlKey && e.which === 72) {
+            e.preventDefault()
+            $(".product").hide();
+            // Your code here
+            // alert('Ctrl + H pressed');
+            // Example:
+            // $('#element').toggle();
+        }
+    });
 
-    $(".product").each(function () {
-        $(this).mouseenter(function () {
-            $(this).slideUp();
-        });
-    })
+    // $(".product").each(function () {
+    //     $(this).mouseenter(function () {
+    //         $(this).slideUp();
+    //     });
+    // })
 
 })

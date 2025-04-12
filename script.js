@@ -8,7 +8,9 @@ const disTags = document.querySelector("#tags");
 const applyTag = document.getElementById("applyTag");
 const clear = document.getElementById("clear");
 const applyRadio = document.getElementById('applyRadio');
-
+const pagePrev = document.getElementById('pagePrev');
+const pageNext = document.getElementById('pageNext');
+const atpage = document.getElementById('atpage');
 
 // API Reference
 // https://dummyjson.com/docs/products
@@ -60,11 +62,13 @@ let runner = setInterval(function () {
         disTags.appendChild(tagDiv);
     })
     if (statusFetched == 1) {
+
         clearInterval(runner)
+
     }
 }, 100);
 
-
+let appliedData = []
 function createData(data, search) {
     proContainer.innerHTML = "";
     let method = "";
@@ -80,14 +84,17 @@ function createData(data, search) {
 
     if (method == "lth") {
         data = data.sort(function (a, b) { return a.price - b.price })
+        appliedData = data
         // console.log(data);
     }
     else if (method == "htl") {
         data = data.sort(function (a, b) { return b.price - a.price })
+        appliedData = data
     }
     else {
         // console.log("else 85");
         data = producTable;
+        appliedData = data
     }
 
     let tagy = document.querySelectorAll(".tagInput")
@@ -113,7 +120,9 @@ function createData(data, search) {
         data = []
         dupDel.forEach(function (s) {
             data.push(s)
+            appliedData.push(s)
         })
+        appliedData = data
     }
 
     if (search != "" | search != " ") {
@@ -124,6 +133,7 @@ function createData(data, search) {
                 return true;
             }
         })
+        appliedData = data
         // console.log(data);
     }
     else {
@@ -132,13 +142,77 @@ function createData(data, search) {
     }
 
     // Creating Main Dispay Content
-    createDisplay(data)
+    // createDisplay(data)
+    paginateData(appliedData, 6, 0)
 
 }
 
+function paginateData(data, limit, start) {
+    let pData = []
+
+    console.log(data.length)
+
+    for (let i = start; i < limit; i++) {
+        pData.push(data[i])
+    }
+    createDisplay(pData)
+}
+
+window.onload = function () {
+    localStorage.setItem("initial", 0)
+}
+
+let page = parseInt(atpage.textContent)
+pagePrev.onclick = () => {
+    pageNext.style.pointerEvents = "all"
+    page--;
+    atpage.textContent = page;
+    let limit = page * 6;
+    let start = limit - 6;
+    paginateData(appliedData, limit, start)
+    if (page == 1) {
+        pagePrev.style.pointerEvents = "none";
+    }
+
+}
+
+pageNext.onclick = () => {
+    pagePrev.style.pointerEvents = "all";
+    page++;
+    atpage.textContent = page;
+    let limit = page * 6;
+    let start = limit - 6;
+    // console.log(limit)
+    // console.log(start)
+
+    paginateData(appliedData, limit, start)
+    if (page == appliedData.length / 6) {
+        pageNext.style.pointerEvents = "none"
+    }
+}
+
+// function createDisplay(data) {
+
+//     for (let [i, pro] of data.entries()) {
+//         console.log(pro)
+//         console.log(i)
+//         // console.log("data . foreach");
+//         let searchNameL = pro['name'];
+//         searchNameL = String(searchNameL).toLowerCase();
+//         let newPro = document.createElement("div");
+//         newPro.classList.add("product");
+//         newPro.innerHTML = `
+//         <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
+//         <h3 class="pro-title">${pro["name"]}</h2>
+//         <h5>${pro["price"]} $</h3>
+//         <p>Tags: ${pro["tags"]}</p>
+//         `;
+//         proContainer.appendChild(newPro);
+//     }
+// }
 
 function createDisplay(data) {
-
+    proContainer.innerHTML = "";
     data.forEach(function (pro, i) {
         // console.log("data . foreach");
         let searchNameL = pro['name'];
@@ -168,19 +242,22 @@ clear.onclick = () => {
     console.log("Clear Clecked");
     document.querySelectorAll(".tagInput").forEach(f => f.checked = false)
 
-    createDisplay(producTable);
+    atpage.textContent = 1;
+    // createDisplay(producTable);
+    paginateData(appliedData, 6, 0)
 }
 
 searchBt.onclick = () => {
-
     let val = searchIN.value;
     createData(producTable, val);
+    atpage.textContent = 1;
 
 }
 
 applyTag.onclick = () => {
-
     createData(producTable, "")
+    paginateData(appliedData, 6, 0)
+    atpage.textContent = 1;
 
 }
 
