@@ -38,6 +38,7 @@ let runner = setInterval(function () {
 
     allProducts.forEach(function (p, i) {
         producTable[i] = {
+            id: p["id"],
             name: p["title"],
             image: p["images"][0],
             price: p["price"],
@@ -64,7 +65,6 @@ let runner = setInterval(function () {
     if (statusFetched == 1) {
 
         clearInterval(runner)
-
     }
 }, 100);
 
@@ -149,7 +149,6 @@ function createData(data, search) {
 
 function paginateData(data, limit, start) {
     let pData = []
-
     console.log(data.length)
 
     for (let i = start; i < limit; i++) {
@@ -158,9 +157,9 @@ function paginateData(data, limit, start) {
     createDisplay(pData)
 }
 
-window.onload = function () {
-    localStorage.setItem("initial", 0)
-}
+// window.onload = function () {
+//     localStorage.setItem("initial", 0)
+// }
 
 let page = parseInt(atpage.textContent)
 pagePrev.onclick = () => {
@@ -170,7 +169,7 @@ pagePrev.onclick = () => {
     let limit = page * 6;
     let start = limit - 6;
     paginateData(appliedData, limit, start)
-    if (page == 1) {
+    if (page <= 1) {
         pagePrev.style.pointerEvents = "none";
     }
 
@@ -186,8 +185,9 @@ pageNext.onclick = () => {
     // console.log(start)
 
     paginateData(appliedData, limit, start)
-    if (page == appliedData.length / 6) {
+    if (page >= appliedData.length / 6) {
         pageNext.style.pointerEvents = "none"
+        console.log(appliedData.length)
     }
 }
 
@@ -211,6 +211,7 @@ pageNext.onclick = () => {
 //     }
 // }
 
+let atcBTNS;
 function createDisplay(data) {
     proContainer.innerHTML = "";
     data.forEach(function (pro, i) {
@@ -224,9 +225,19 @@ function createDisplay(data) {
     <h3 class="pro-title">${pro["name"]}</h2>
     <h5>${pro["price"]} $</h3>
     <p>Tags: ${pro["tags"]}</p>
+    <button class="atcButton" id="${pro["id"]}"> Add To Cart </button>
     `;
         proContainer.appendChild(newPro);
     });
+
+    atcBTNS = "";
+    atcBTNS = document.querySelectorAll(".atcButton")
+    atcBTNS.forEach(function (b) {
+        b.onclick = () => {
+            console.log("Clickecd", b.getAttribute("id"))
+        }
+    })
+
 }
 
 
@@ -241,23 +252,32 @@ let creator = setInterval(function () {
 clear.onclick = () => {
     console.log("Clear Clecked");
     document.querySelectorAll(".tagInput").forEach(f => f.checked = false)
-
-    atpage.textContent = 1;
+    pageNext.style.pointerEvents = "all"
+    pagePrev.style.pointerEvents = "none";
+    page = 1
+    atpage.textContent = page;
     // createDisplay(producTable);
-    paginateData(appliedData, 6, 0)
+    paginateData(producTable, 6, 0)
 }
 
 searchBt.onclick = () => {
     let val = searchIN.value;
     createData(producTable, val);
-    atpage.textContent = 1;
+    page = 1;
+    atpage.textContent = page;
+    paginateData(appliedData, 6, 0)
+    pageNext.style.pointerEvents = "all"
+    pagePrev.style.pointerEvents = "none";
 
 }
 
 applyTag.onclick = () => {
     createData(producTable, "")
+    page = 1;
+    atpage.textContent = page;
     paginateData(appliedData, 6, 0)
-    atpage.textContent = 1;
+    pageNext.style.pointerEvents = "all"
+    pagePrev.style.pointerEvents = "none";
 
 }
 

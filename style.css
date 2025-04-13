@@ -1,5 +1,28 @@
+* {
+  background-color: rgb(160, 131, 92);
+}
+
 section {
   /* margin: 50px; */
+}
+
+header {
+  display: flex;
+  padding: 10px;
+  border-bottom: 2px solid grey;
+  position: fixed;
+  width: 100%;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hChild {
+  margin: 5px 25px;
+}
+
+#cFilled {
+  display: none;
 }
 
 .proSec {

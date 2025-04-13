@@ -7,10 +7,10 @@ $(document).ready(function () {
     // })
 
 
-    $("#clear").mouseenter(function () {
-        console.log("you are on clear");
-        // alert("You entered p1!");
-    });
+    // $("#clear").mouseenter(function () {
+    //     console.log("you are on clear");
+    //     // alert("You entered p1!");
+    // });
 
     $(document).keydown(function (e) {
         if (e.ctrlKey && e.which === 72) {
