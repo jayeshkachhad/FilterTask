@@ -130,3 +130,41 @@ header {
   /* background-color: grey; */
   pointer-events: none;
 }
+
+.cartMain {
+  display: none;
+  width: 400px;
+  border: 2px solid black;
+  border-radius: 5px;
+  /* display: flex; */
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+}
+
+.cartClose {
+  position: fixed;
+  font-size: 25px;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  border: 1px solid grey;
+  border-radius: 2px;
+}
+
+.cartContainer {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid black;
+  width: 95%;
+}
+
+.cartList {
+  
+}

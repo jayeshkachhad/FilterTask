@@ -29,4 +29,10 @@ $(document).ready(function () {
     //     });
     // })
 
+    // setTimeout(function () {
+
+    //     $(".thumb").hide()
+    // }, 1000)
+
+
 })

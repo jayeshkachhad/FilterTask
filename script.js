@@ -11,6 +11,12 @@ const applyRadio = document.getElementById('applyRadio');
 const pagePrev = document.getElementById('pagePrev');
 const pageNext = document.getElementById('pageNext');
 const atpage = document.getElementById('atpage');
+const cEmpty = document.getElementById("cEmpty");
+const cFilled = document.getElementById("cFilled");
+const cart = document.getElementById("cartMain");
+const cartClose = document.getElementById("cartClose");
+const cartList = document.getElementById("cartList");
+
 
 // API Reference
 // https://dummyjson.com/docs/products
@@ -20,6 +26,8 @@ const productApi = "https://dummyjson.com/products";
 let allProducts = [];
 let producTable = [];
 let statusFetched = 0
+
+let cartItems = [];
 
 fetch(productApi)
     .then((response) => response.json())
@@ -143,14 +151,13 @@ function createData(data, search) {
 
     // Creating Main Dispay Content
     // createDisplay(data)
-    paginateData(appliedData, 6, 0)
+    // paginateData(appliedData, 6, 0)
 
 }
 
 function paginateData(data, limit, start) {
     let pData = []
-    console.log(data.length)
-
+    // console.log(data.length)
     for (let i = start; i < limit; i++) {
         pData.push(data[i])
     }
@@ -185,7 +192,10 @@ pageNext.onclick = () => {
     // console.log(start)
 
     paginateData(appliedData, limit, start)
-    if (page >= appliedData.length / 6) {
+
+    let pageCount = Math.ceil(appliedData.length / 6)
+    console.log(pageCount);
+    if (page >= pageCount) {
         pageNext.style.pointerEvents = "none"
         console.log(appliedData.length)
     }
@@ -221,7 +231,7 @@ function createDisplay(data) {
         let newPro = document.createElement("div");
         newPro.classList.add("product");
         newPro.innerHTML = `
-    <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
+    <img class="thumb" src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
     <h3 class="pro-title">${pro["name"]}</h2>
     <h5>${pro["price"]} $</h3>
     <p>Tags: ${pro["tags"]}</p>
@@ -234,7 +244,11 @@ function createDisplay(data) {
     atcBTNS = document.querySelectorAll(".atcButton")
     atcBTNS.forEach(function (b) {
         b.onclick = () => {
+            cEmpty.style.display = "none";
+            cFilled.style.display = "block";
             console.log("Clickecd", b.getAttribute("id"))
+            // let item = document.getElementById(b.getAttribute("id"))
+            cartItems.push(appliedData.find(f => f.id == b.getAttribute("id")));
         }
     })
 
@@ -243,8 +257,9 @@ function createDisplay(data) {
 
 // create all products on display
 let creator = setInterval(function () {
-    createData(producTable, "");
     if (statusFetched == 1) {
+        createData(producTable, "");
+        paginateData(appliedData, 6, 0)
         clearInterval(creator)
     }
 }, 150);
@@ -265,7 +280,7 @@ searchBt.onclick = () => {
     createData(producTable, val);
     page = 1;
     atpage.textContent = page;
-    paginateData(appliedData, 6, 0)
+    paginateData(appliedData, appliedData.length, 0)
     pageNext.style.pointerEvents = "all"
     pagePrev.style.pointerEvents = "none";
 
@@ -273,9 +288,10 @@ searchBt.onclick = () => {
 
 applyTag.onclick = () => {
     createData(producTable, "")
-    page = 1;
+    // createDisplay(appliedData)
     atpage.textContent = page;
-    paginateData(appliedData, 6, 0)
+    page = 1;
+    paginateData(appliedData, appliedData.length, 0)
     pageNext.style.pointerEvents = "all"
     pagePrev.style.pointerEvents = "none";
 
@@ -284,3 +300,28 @@ applyTag.onclick = () => {
 // producTable.filter(pro => pro.tags.includes("beauty"))
 
 // document.querySelectorAll(".tagInput").forEach(f => f.click())
+
+
+cEmpty.onclick = () => {
+    cart.style.display = "flex";
+}
+cFilled.onclick = () => {
+    cart.style.display = "flex";
+    cartList.innerHTML = "";
+
+    let cartUL = document.createElement("ul");
+    cartItems.forEach(function (i, index) {
+        let cartProduct = document.createElement("li")
+        cartProduct.innerHTML = `
+            ${index} . ${i.name}
+        `
+        cartUL.appendChild(cartProduct);
+    })
+
+    cartList.innerHTML = cartUL;
+
+}
+
+cartClose.onclick = () => {
+    cart.style.display = "none";
+}
