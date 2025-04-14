@@ -16,6 +16,9 @@ const cFilled = document.getElementById("cFilled");
 const cart = document.getElementById("cartMain");
 const cartClose = document.getElementById("cartClose");
 const cartList = document.getElementById("cartList");
+const buyList = document.getElementById("buyList");
+const billTotal = document.getElementById("billTotal");
+
 
 
 // API Reference
@@ -201,25 +204,6 @@ pageNext.onclick = () => {
     }
 }
 
-// function createDisplay(data) {
-
-//     for (let [i, pro] of data.entries()) {
-//         console.log(pro)
-//         console.log(i)
-//         // console.log("data . foreach");
-//         let searchNameL = pro['name'];
-//         searchNameL = String(searchNameL).toLowerCase();
-//         let newPro = document.createElement("div");
-//         newPro.classList.add("product");
-//         newPro.innerHTML = `
-//         <img src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
-//         <h3 class="pro-title">${pro["name"]}</h2>
-//         <h5>${pro["price"]} $</h3>
-//         <p>Tags: ${pro["tags"]}</p>
-//         `;
-//         proContainer.appendChild(newPro);
-//     }
-// }
 
 let atcBTNS;
 function createDisplay(data) {
@@ -249,6 +233,7 @@ function createDisplay(data) {
             console.log("Clickecd", b.getAttribute("id"))
             // let item = document.getElementById(b.getAttribute("id"))
             cartItems.push(appliedData.find(f => f.id == b.getAttribute("id")));
+            createCart()
         }
     })
 
@@ -298,7 +283,6 @@ applyTag.onclick = () => {
 }
 
 // producTable.filter(pro => pro.tags.includes("beauty"))
-
 // document.querySelectorAll(".tagInput").forEach(f => f.click())
 
 
@@ -307,21 +291,31 @@ cEmpty.onclick = () => {
 }
 cFilled.onclick = () => {
     cart.style.display = "flex";
-    cartList.innerHTML = "";
+    // console.log(cartItems);
 
-    let cartUL = document.createElement("ul");
-    cartItems.forEach(function (i, index) {
-        let cartProduct = document.createElement("li")
-        cartProduct.innerHTML = `
-            ${index} . ${i.name}
-        `
-        cartUL.appendChild(cartProduct);
-    })
-
-    cartList.innerHTML = cartUL;
+    createCart()
 
 }
 
 cartClose.onclick = () => {
     cart.style.display = "none";
+}
+
+function createCart() {
+    let total = 0;
+    buyList.innerHTML = `<tr><th>No</th><th>Name</th><th>Price</th> <th>Value</th></tr>`
+    cartItems.forEach(function (i, index) {
+        // console.log(i);
+        let iii = document.createElement("tr")
+        iii.innerHTML = `<td>${index}</td>
+                        <td>${i.name}</td>
+                        <td>${i.price}</td>
+                        <td>${i.price}</td>`
+        buyList.appendChild(iii)
+
+
+        total = total + parseFloat(i.price)
+        // console.log(total);
+        billTotal.innerText = " Bill Total : " + total
+    })
 }
