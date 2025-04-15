@@ -18,46 +18,32 @@ $(document).ready(function () {
 
 
     const pros = $("#allPro");
-    let pro = $(".productList");
+    // let pro = $(".productList");
 
     // 0 for Grid, 1 for List, 2 for slide
     let view = 0;
     function setView() {
+
+        pros.removeClass();
+        pros.children('div').removeClass();
+        $(".product").removeClass()
+
         if (view == 0) {
             console.log("get in grid 0");
-
-            try {
-                $(".productsSlide").removeClass();
-                // $(".productsSlide").removeClass('productsSlide').addClass('products');
-                console.log("here at try");
-            } catch {
-                console.log("here at catch");
-                if (pros.hasClass('productsList')) {
-                    pros.removeClass('productsList').addClass('products');
-                    $(".productList").removeClass('productList').addClass('product')
-                    console.log("here at if ");
-                }
-            }
-
-            if (pros.hasClass('productsList')) {
-                pros.removeClass('productsList').addClass('products');
-                $(".productList").removeClass('productList').addClass('product')
-                console.log("here at if ");
-            }
-
+            pros.addClass('products');
+            pros.children('div').addClass('product');
             $(".thumb").width(300).height(200);
-
 
         } if (view == 1) {
             console.log("get in list 1");
-            $(".products").removeClass('products').addClass('productsList')
-            $(".product").removeClass('product').addClass('productList')
+            pros.addClass('productsList');
+            pros.children('div').addClass('productList');
             $(".thumb").width(150).height(150);
+
         } if (view == 2) {
             console.log("get in slide 2");
-            $(".products").removeClass('products').addClass('productsSlide')
-            $(".productsList").removeClass('productsList').addClass('productsSlide');
-
+            pros.addClass('productsSlide');
+            pros.children('div').addClass('product');
 
         } else {
             console.log("else Got");
