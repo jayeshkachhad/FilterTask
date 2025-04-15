@@ -159,73 +159,73 @@ function createData(data, search) {
 }
 
 
-// function paginateData(data, limit, start) {
-//     let pData = []
-//     // console.log(data.length)
-//     for (let i = start; i < limit; i++) {
-//         pData.push(data[i])
-//     }
-//     createDisplay(pData)
+function paginateData(data, limit, start) {
+    let pData = []
+    // console.log(data.length)
+    for (let i = start; i < limit; i++) {
+        pData.push(data[i])
+    }
+    createDisplay(pData)
 
+}
+
+// window.onload = function () {
+//     localStorage.setItem("initial", 0)
 // }
 
-// // window.onload = function () {
-// //     localStorage.setItem("initial", 0)
-// // }
+let page = parseInt(atpage.textContent)
+pagePrev.onclick = () => {
+    pageNext.style.pointerEvents = "all"
+    page--;
+    atpage.textContent = page;
+    let limit = page * 6;
+    let start = limit - 6;
+    paginateData(appliedData, limit, start)
+    if (page <= 1) {
+        pagePrev.style.pointerEvents = "none";
+    }
+}
 
-// let page = parseInt(atpage.textContent)
-// pagePrev.onclick = () => {
-//     pageNext.style.pointerEvents = "all"
-//     page--;
-//     atpage.textContent = page;
-//     let limit = page * 6;
-//     let start = limit - 6;
-//     paginateData(appliedData, limit, start)
-//     if (page <= 1) {
-//         pagePrev.style.pointerEvents = "none";
-//     }
-// }
+pageNext.onclick = () => {
+    pagePrev.style.pointerEvents = "all";
+    let pageCount = Math.ceil(appliedData.length / 6)
+
+    if (pageCount == 1) {
+        pageNext.style.pointerEvents = "none"
+        pagePrev.style.pointerEvents = "none";
+    } else {
+        page++;
+        atpage.textContent = page;
+        let limit = page * 6;
+        let start = limit - 6;
+        // console.log(limit)
+        // console.log(start)
+
+        paginateData(appliedData, limit, start)
+
+        if (page >= pageCount) {
+            pageNext.style.pointerEvents = "none"
+            console.log(appliedData.length)
+        }
+    }
+}
 
 // pageNext.onclick = () => {
 //     pagePrev.style.pointerEvents = "all";
+//     page++;
+//     atpage.textContent = page;
+//     let limit = page * 6;
+//     let start = limit - 6;
+//     // console.log(limit)
+//     // console.log(start)
+//     paginateData(appliedData, limit, start)
 //     let pageCount = Math.ceil(appliedData.length / 6)
-
-//     if (pageCount == 1) {
+//     console.log(pageCount);
+//     if (page >= pageCount) {
 //         pageNext.style.pointerEvents = "none"
-//         pagePrev.style.pointerEvents = "none";
-//     } else {
-//         page++;
-//         atpage.textContent = page;
-//         let limit = page * 6;
-//         let start = limit - 6;
-//         // console.log(limit)
-//         // console.log(start)
-
-//         paginateData(appliedData, limit, start)
-
-//         if (page >= pageCount) {
-//             pageNext.style.pointerEvents = "none"
-//             console.log(appliedData.length)
-//         }
+//         console.log(appliedData.length)
 //     }
 // }
-
-// // pageNext.onclick = () => {
-// //     pagePrev.style.pointerEvents = "all";
-// //     page++;
-// //     atpage.textContent = page;
-// //     let limit = page * 6;
-// //     let start = limit - 6;
-// //     // console.log(limit)
-// //     // console.log(start)
-// //     paginateData(appliedData, limit, start)
-// //     let pageCount = Math.ceil(appliedData.length / 6)
-// //     console.log(pageCount);
-// //     if (page >= pageCount) {
-// //         pageNext.style.pointerEvents = "none"
-// //         console.log(appliedData.length)
-// //     }
-// // }
 
 
 let atcBTNS;
@@ -268,8 +268,8 @@ function createDisplay(data) {
 let creator = setInterval(function () {
     if (statusFetched == 1) {
         createData(producTable, "");
-        // paginateData(appliedData, 6, 0)
-        createDisplay(appliedData)
+        paginateData(appliedData, 6, 0)
+        // createDisplay(appliedData)
         clearInterval(creator)
     }
 }, 150);

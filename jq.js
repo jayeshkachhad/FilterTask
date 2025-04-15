@@ -9,10 +9,6 @@ $(document).ready(function () {
         if (e.ctrlKey && e.which === 72) {
             e.preventDefault()
             $(".product").hide();
-            // Your code here
-            // alert('Ctrl + H pressed');
-            // Example:
-            // $('#element').toggle();
         }
     });
 
@@ -54,10 +50,12 @@ $(document).ready(function () {
     $("#displayGrid").click(function () {
         view = 0;
         setView()
+        $("#pagination").show()
     })
     $("#displayList").click(function () {
         view = 1;
         setView()
+        $("#pagination").show()
     })
     $("#displaySlide").click(function () {
         view = 2;
