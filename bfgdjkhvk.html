@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="products" id="allPro">
+
+        <div class="product">
+            <img class="thumb"
+                src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
+                alt="Essence Mascara Lash Princess" height="200px" width="300px">
+            <div class="details">
+                <h3 class="pro-title">Essence Mascara Lash Princess</h3>
+                <h5>9.99 $</h5>
+                <p>Tags: beauty,mascara</p>
+            </div>
+            <button class="atcButton" id="1"> Add To Cart </button>
+        </div>
+        <div class="product">
+            <img class="thumb"
+                src="https://cdn.dummyjson.com/products/images/beauty/Eyeshadow%20Palette%20with%20Mirror/1.png"
+                alt="Eyeshadow Palette with Mirror" height="200px" width="300px">
+            <div class="details">
+                <h3 class="pro-title">Eyeshadow Palette with Mirror</h3>
+                <h5>19.99 $</h5>
+                <p>Tags: beauty,eyeshadow</p>
+            </div>
+            <button class="atcButton" id="2"> Add To Cart </button>
+        </div>
+        <div class="product">
+            <img class="thumb" src="https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png"
+                alt="Powder Canister" height="200px" width="300px">
+            <div class="details">
+                <h3 class="pro-title">Powder Canister</h3>
+                <h5>14.99 $</h5>
+                <p>Tags: beauty,face powder</p>
+            </div>
+            <button class="atcButton" id="3"> Add To Cart </button>
+        </div>
+
+    </div>
+
+
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+    <script>
+        // Initialize Flickity on the productsList container
+        var flkty = new Flickity('.products', {
+            cellAlign: 'left',    // Align cells to the left
+            contain: true,        // Ensure cells don't overflow
+            wrapAround: true,     // Enable infinite scrolling
+            autoPlay: true,       // Enable autoplay
+            prevNextButtons: true, // Show previous/next buttons
+            pageDots: true        // Show pagination dots
+        });
+    </script>
+</body>
+
+</html>

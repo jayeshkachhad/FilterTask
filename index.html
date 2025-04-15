@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filters</title>
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <link rel="stylesheet" href="/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -18,15 +19,20 @@
         <!-- <img src="" alt=""> -->
         <h1 class="hChild">Logo</h1>
         <h2 class="hChild">Store Name</h2>
-        <img class="hChild" id="cEmpty" src="/cart.svg" alt="cart" height="60px">
-        <img class="hChild" id="cFilled" src="/cartFilled.svg" alt="cart" height="60px">
+        <img class="hChild" id="cEmpty" src="icons/cart.svg" alt="cart" height="60px">
+        <img class="hChild" id="cFilled" src="icons/cartFilled.svg" alt="cart" height="60px">
     </header>
 
     <section class="display">
 
         <div class="leftFilter">
             <p style="margin-top: 100px;"></p>
-            <h2>Product Filters</h2>
+            <div class="gridList">
+                <h2>Product Filters</h2>
+                <div class="gli" id="displayGrid"><img src="/icons/grid.svg" width="32px" alt="grid"></div>
+                <div class="gli" id="displayList"><img src="/icons/list.svg" width="32px" alt="list"></div>
+                <div class="gli" id="displaySlide"><img src="/icons/slide.svg" width="32px" alt="slide"></div>
+            </div>
 
             <p>&nbsp;</p>
             <h4>Select Type</h4>
@@ -105,7 +111,7 @@
         </div>
     </section>
 
-
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="/script.js"></script>
     <script src="/jq.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"

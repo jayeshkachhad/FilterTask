@@ -25,6 +25,20 @@ header {
   display: none;
 }
 
+.gridList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.gli {
+  border: 1px solid black;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+}
+
 .proSec {
   /* border: 1px solid red; */
   width: 70%;
@@ -43,6 +57,12 @@ header {
   gap: 1rem;
 }
 
+.productsList {
+  display: grid;
+  width: 800px;
+  gap: 1rem;
+}
+
 .product {
   display: flex;
   max-width: 322px;
@@ -55,12 +75,41 @@ header {
   border-radius: 5px;
 }
 
+.productList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.productsSlide {
+  display: flex;
+  overflow: scroll;
+  width: 1000px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
 .product img {
   object-fit: contain;
 }
 
 .pro-title {
   font-size: 20px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /* gap: 15px; */
 }
 
 .display {

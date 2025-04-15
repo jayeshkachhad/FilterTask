@@ -158,51 +158,74 @@ function createData(data, search) {
 
 }
 
-function paginateData(data, limit, start) {
-    let pData = []
-    // console.log(data.length)
-    for (let i = start; i < limit; i++) {
-        pData.push(data[i])
-    }
-    createDisplay(pData)
-}
 
-// window.onload = function () {
-//     localStorage.setItem("initial", 0)
+// function paginateData(data, limit, start) {
+//     let pData = []
+//     // console.log(data.length)
+//     for (let i = start; i < limit; i++) {
+//         pData.push(data[i])
+//     }
+//     createDisplay(pData)
+
 // }
 
-let page = parseInt(atpage.textContent)
-pagePrev.onclick = () => {
-    pageNext.style.pointerEvents = "all"
-    page--;
-    atpage.textContent = page;
-    let limit = page * 6;
-    let start = limit - 6;
-    paginateData(appliedData, limit, start)
-    if (page <= 1) {
-        pagePrev.style.pointerEvents = "none";
-    }
+// // window.onload = function () {
+// //     localStorage.setItem("initial", 0)
+// // }
 
-}
+// let page = parseInt(atpage.textContent)
+// pagePrev.onclick = () => {
+//     pageNext.style.pointerEvents = "all"
+//     page--;
+//     atpage.textContent = page;
+//     let limit = page * 6;
+//     let start = limit - 6;
+//     paginateData(appliedData, limit, start)
+//     if (page <= 1) {
+//         pagePrev.style.pointerEvents = "none";
+//     }
+// }
 
-pageNext.onclick = () => {
-    pagePrev.style.pointerEvents = "all";
-    page++;
-    atpage.textContent = page;
-    let limit = page * 6;
-    let start = limit - 6;
-    // console.log(limit)
-    // console.log(start)
+// pageNext.onclick = () => {
+//     pagePrev.style.pointerEvents = "all";
+//     let pageCount = Math.ceil(appliedData.length / 6)
 
-    paginateData(appliedData, limit, start)
+//     if (pageCount == 1) {
+//         pageNext.style.pointerEvents = "none"
+//         pagePrev.style.pointerEvents = "none";
+//     } else {
+//         page++;
+//         atpage.textContent = page;
+//         let limit = page * 6;
+//         let start = limit - 6;
+//         // console.log(limit)
+//         // console.log(start)
 
-    let pageCount = Math.ceil(appliedData.length / 6)
-    console.log(pageCount);
-    if (page >= pageCount) {
-        pageNext.style.pointerEvents = "none"
-        console.log(appliedData.length)
-    }
-}
+//         paginateData(appliedData, limit, start)
+
+//         if (page >= pageCount) {
+//             pageNext.style.pointerEvents = "none"
+//             console.log(appliedData.length)
+//         }
+//     }
+// }
+
+// // pageNext.onclick = () => {
+// //     pagePrev.style.pointerEvents = "all";
+// //     page++;
+// //     atpage.textContent = page;
+// //     let limit = page * 6;
+// //     let start = limit - 6;
+// //     // console.log(limit)
+// //     // console.log(start)
+// //     paginateData(appliedData, limit, start)
+// //     let pageCount = Math.ceil(appliedData.length / 6)
+// //     console.log(pageCount);
+// //     if (page >= pageCount) {
+// //         pageNext.style.pointerEvents = "none"
+// //         console.log(appliedData.length)
+// //     }
+// // }
 
 
 let atcBTNS;
@@ -216,9 +239,11 @@ function createDisplay(data) {
         newPro.classList.add("product");
         newPro.innerHTML = `
     <img class="thumb" src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
+    <div class="details">
     <h3 class="pro-title">${pro["name"]}</h2>
     <h5>${pro["price"]} $</h3>
     <p>Tags: ${pro["tags"]}</p>
+    </div>
     <button class="atcButton" id="${pro["id"]}"> Add To Cart </button>
     `;
         proContainer.appendChild(newPro);
@@ -236,7 +261,6 @@ function createDisplay(data) {
             createCart()
         }
     })
-
 }
 
 
@@ -244,7 +268,8 @@ function createDisplay(data) {
 let creator = setInterval(function () {
     if (statusFetched == 1) {
         createData(producTable, "");
-        paginateData(appliedData, 6, 0)
+        // paginateData(appliedData, 6, 0)
+        createDisplay(appliedData)
         clearInterval(creator)
     }
 }, 150);
@@ -265,7 +290,7 @@ searchBt.onclick = () => {
     createData(producTable, val);
     page = 1;
     atpage.textContent = page;
-    paginateData(appliedData, appliedData.length, 0)
+    paginateData(appliedData, 6, 0)
     pageNext.style.pointerEvents = "all"
     pagePrev.style.pointerEvents = "none";
 
@@ -276,7 +301,7 @@ applyTag.onclick = () => {
     // createDisplay(appliedData)
     atpage.textContent = page;
     page = 1;
-    paginateData(appliedData, appliedData.length, 0)
+    paginateData(appliedData, 6, 0)
     pageNext.style.pointerEvents = "all"
     pagePrev.style.pointerEvents = "none";
 
@@ -319,3 +344,4 @@ function createCart() {
         billTotal.innerText = " Bill Total : " + total
     })
 }
+
