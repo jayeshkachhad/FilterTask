@@ -1,9 +1,14 @@
+html {
+  scroll-behavior: smooth;
+}
+
 * {
-  background-color: rgb(248, 219, 180);
+  /* background-color: rgb(248, 219, 180); */
 }
 
 section {
   /* margin: 50px; */
+  margin: 0;
 }
 
 header {
@@ -59,20 +64,25 @@ header {
 
 .productsList {
   display: grid;
-  width: 800px;
+  width: 80%;
   gap: 1rem;
 }
 
 .product {
   display: flex;
-  max-width: 322px;
-  min-height: 340px;
+  width: 322px;
+  height: 340px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 5px 10px;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+.product img {
+  height: 200px;
+  /* width: 250px; */
 }
 
 .productList {
@@ -95,6 +105,40 @@ header {
   border-radius: 5px;
 }
 
+/* =================Col =================== */
+.productsCol {
+  display: flex;
+  width: 100%;
+  margin: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.productCol {
+  /* flex: 1 1 300px; */
+  flex: 1 1 calc(25% - 10px);
+  /* min-width: 150px; */
+  box-sizing: border-box;
+  display: flex;
+  /* width: 322px; */
+  min-height: 340px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.productCol img {
+  height: 150px;
+  /* width: 150px; */
+}
+
+/* =================Col =================== */
+
 .product img {
   object-fit: contain;
 }
@@ -113,6 +157,7 @@ header {
 }
 
 .display {
+  margin: 0;
   display: flex;
   justify-content: center;
   /* align-items: center; */
@@ -125,7 +170,7 @@ header {
 
 .priceFilter {
   margin-top: 20px;
-  width: 100%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -135,7 +180,7 @@ header {
 }
 
 .priceFilter input {
-  width: 70%;
+  width: 80%;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid black;
@@ -156,6 +201,7 @@ header {
 .radio input {
   size: 10px;
   height: 15px;
+  width: 25px;
   /* margin-right: 5px; */
   font-size: 10px;
 }
@@ -215,6 +261,14 @@ header {
   height: 80vh;
 }
 
+.atcButton {
+  border: none;
+  background-color: #2fabff;
+  border-radius: 4px;
+  color: white;
+  padding: 3px 7px;
+}
+
 .cartTotal {
   position: relative;
   bottom: 10px;
@@ -224,4 +278,39 @@ header {
 
 tr {
   font-weight: 200;
+}
+
+@media (max-width: 1050px) {
+
+  .productCol h3 {
+    font-size: smaller;
+  }
+
+  .productCol h5 {
+    font-size: smaller;
+  }
+
+  .productCol p {
+    font-size: smaller;
+  }
+
+  .productCol img {
+    height: 100px;
+    width: 100px;
+  }
+
+  .gridList {
+    gap: 10px;
+  }
+
+  .radio {
+    font-size: smaller;
+  }
+}
+
+
+@media (max-width: 800px) {
+  .gridList {
+    gap: 5px;
+  }
 }

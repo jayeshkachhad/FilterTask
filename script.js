@@ -238,7 +238,7 @@ function createDisplay(data) {
         let newPro = document.createElement("div");
         newPro.classList.add("product");
         newPro.innerHTML = `
-    <img class="thumb" src="${pro["image"]}" alt="${pro["name"]}" height="200px" width="300px">
+    <img class="thumb" src="${pro["image"]}" alt="${pro["name"]}">
     <div class="details">
     <h3 class="pro-title">${pro["name"]}</h2>
     <h5>${pro["price"]} $</h3>
@@ -268,8 +268,8 @@ function createDisplay(data) {
 let creator = setInterval(function () {
     if (statusFetched == 1) {
         createData(producTable, "");
-        paginateData(appliedData, 6, 0)
-        // createDisplay(appliedData)
+        // paginateData(appliedData, 6, 0)
+        createDisplay(appliedData)
         clearInterval(creator)
     }
 }, 150);
